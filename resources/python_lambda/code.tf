@@ -1,12 +1,18 @@
 # Creates a holder for the sha1 of each file in 'lambda_files'
-data "template_file" "all_file_sha1" {
-  count = "${length(var.lambda_files)}"
-  template = "${sha1(file(element(var.lambda_files, count.index)))}"
-}
+#data "template_file" "all_file_sha1" {
+#  count = "${length(var.lambda_files)}"
+#  template = "${sha1(file(element(var.lambda_files, count.index)))}"
+#}
 
 # Concatenates the sha1's above into a single string (':' seperated sha1's)
-data "template_file" "concatenated_sha1" {
-  template = "${join(":", data.template_file.all_file_sha1.*.template)}"
+#data "template_file" "concatenated_sha1" {
+#  template = "${join(":", data.template_file.all_file_sha1.*.template)}"
+#}
+
+module "lambda_files_sha1"
+{
+  source = "git::git@github.com:damonhachmeister/Terraform-Module//patterns/sha1_file_list"
+  files = "${var.lambda_files}"
 }
 
 resource "null_resource" "install_packages" {  
@@ -29,7 +35,7 @@ resource "random_id" "source" {
   depends_on = ["null_resource.install_packages"]
   
   keepers = {     
-      hash = "${sha1(data.template_file.concatenated_sha1.template)}"
+      hash = "${module.lambda_files_sha1.sha1}"
   }
 
   byte_length = 8

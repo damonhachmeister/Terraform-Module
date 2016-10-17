@@ -9,4 +9,4 @@ data "template_file" "concatenated_sha1" {
   template = "${join(":", data.template_file.all_file_sha1.*.template)}"
 }
 
-output "sha1" { value = "${data.template_file.concatenated_sha1.template}" }
+output "sha1" { value = "${sha1(data.template_file.concatenated_sha1.template)}" }
