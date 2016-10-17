@@ -39,7 +39,7 @@ EOF
 
 module "example_lambda_1"
 {
-  source = "../modules_repo/resources/python_lambda"
+  source = "git::git@github.com:cargometrics/terraform//modules/resources/python_lambda?ref=v0.0.1"
 
   lambda_files       = ["lib/lambda_entry.py"]
   lambda_name        = "test lambda"
@@ -52,7 +52,7 @@ module "example_lambda_1"
 
 module "example_lambda_2"
 {
-  source = "../modules_repo/resources/python_lambda"
+  source = "git::git@github.com:cargometrics/terraform//modules/resources/python_lambda?ref=v0.0.1"
 
   lambda_files       = ["lib/helper1.py", "lib/helper2.py", "lib/lambda_entry.py"]
   lambda_name        = "test lambda"
@@ -66,7 +66,7 @@ module "example_lambda_2"
 
 module "example_lambda_3"
 {
-  source = "../modules_repo/resources/python_lambda"
+  source = "git::git@github.com:cargometrics/terraform//modules/resources/python_lambda?ref=v0.0.1"
 
   lambda_files       = ["lib/lambda_entry.py"]
   lambda_name        = "test lambda"
